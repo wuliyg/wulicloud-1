@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: wulicloud-eureka
+  # security 安全认证
+  security:
+    user:
+      name: eureka
+      password: eureka
+
+# 多例启动实现eureka高可用集群
+---
+#eureka服务器a配置
+spring:
+  profiles: eureka-a                          #配置名称
+server:
+  port: 9000
+eureka:
+  instance:
+    hostname: eureka.server.a                 #服务器域名,需修改hosts文件
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}     # eureka中实例显示配置
+    prefer-ip-address: true
+    leaseRenewalIntervalInSeconds: 10         # 表示eureka client发送心跳给server端的频率，默认为30秒
+    health-check-url-path: /actuator/health   # 健康检查的地址（依赖spring-boot-starter-actuator）
+    metadata-map:
+      user:
+        name: ${spring.security.user.name}
+        password: ${spring.security.user.password}
+  server:
+     enable-self-preservation: false          # 自我保护模式，即一个服务长时间没有发送心跳，eureka也不会将其删除(默认为true)。
+     eviction-interval-timer-in-ms: 60000     # 清理服务器 60 * 1000ms = 60s
+  client:
+    registerWithEureka: true                  # 是否注册到Eureka服务中
+    fetchRegistry: true                       # 是否读取Eureka服务中的注册信息
+    registryFetchIntervalSeconds: 5           # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    serviceUrl:                               # eureka注册中心地址，多个用逗号分隔（启用security安全认证要加入用户名和密码）
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@eureka.server.b:9001/eureka,http://${spring.security.user.name}:${spring.security.user.password}@eureka.server.a:9000/eureka
+---
+#eureka服务器b配置
+spring:
+  profiles: eureka-b                          #配置名称
+server:
+  port: 9001
+eureka:
+  instance:
+    hostname: eureka.server.b                 # 服务器域名,需修改hosts文件
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}     # eureka中实例显示配置
+    prefer-ip-address: true
+    leaseRenewalIntervalInSeconds: 10         # 表示eureka client发送心跳给server端的频率，默认为30秒
+    health-check-url-path: /actuator/health   # 健康检查的地址（依赖spring-boot-starter-actuator）
+    metadata-map:
+      user:
+        name: ${spring.security.user.name}
+        password: ${spring.security.user.password}
+  server:
+    enable-self-preservation: false           # 自我保护模式，即一个服务长时间没有发送心跳，eureka也不会将其删除(默认为true)。
+    eviction-interval-timer-in-ms: 60000      # 清理无效节点,默认60*1000毫秒,即60秒
+  client:
+    registerWithEureka: true                  # 是否注册到Eureka服务中(加入监控中心后改为true)
+    fetchRegistry: true                       # 是否读取Eureka服务中的注册信息
+    registryFetchIntervalSeconds: 20          # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@eureka.server.a:9000/eureka,http://${spring.security.user.name}:${spring.security.user.password}@eureka.server.b:9001/eureka

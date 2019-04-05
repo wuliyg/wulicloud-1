@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator/dataSource.properties"/>
+    <context id="afsGenerator" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${datasource.driver-class-name}"
+                        connectionURL="${datasource.url}"
+                        userId="${datasource.username}"
+                        password="${datasource.password}">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.wulis.provider.sysOperationLog.model.domain"
+                            targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapping.sysOperationLog"
+                         targetProject="src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.wulis.provider.sysOperationLog.mapper"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+        <table tableName="admin_sys_operation_log" domainObjectName="SysOperationLog">
+            <!--mysql 配置-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

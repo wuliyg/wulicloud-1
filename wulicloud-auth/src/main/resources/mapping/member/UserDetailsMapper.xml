@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wulis.auth.member.mapper.UserDetailsMapper">
+    <resultMap type="com.wulis.auth.member.model.domain.UserDetail" id="ResultMap">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <collection property="authorities" ofType="com.wulis.auth.member.model.domain.Authoritie"
+                    resultMap="AuthoritiesResultMap"/>
+    </resultMap>
+
+    <resultMap id="AuthoritiesResultMap" type="com.wulis.auth.member.model.domain.Authoritie">
+        <result column="authority" jdbcType="VARCHAR" property="authority"/>
+    </resultMap>
+
+    <!-- 根据用户名称查询权限信息 -->
+    <select id="queryUserDetailsByName" parameterType="String" resultMap="ResultMap">
+        SELECT acco.id,acco.account,acco.`password`,auth.authority
+        FROM member_account acco LEFT JOIN member_acco_auth accoauth
+        ON acco.id=accoauth.account_id LEFT JOIN member_authoritie auth
+        ON accoauth.authoritie_id=auth.id
+        WHERE acco.account=#{account}
+    </select>
+</mapper>

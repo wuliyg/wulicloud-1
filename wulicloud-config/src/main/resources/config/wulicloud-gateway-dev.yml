@@ -1,0 +1,47 @@
+foo: Gateway-dev.v10
+server:
+  port: 9005
+spring:
+  cloud:
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+  # RabbitMQ
+  rabbitmq:
+    host: wulis.rabbitmq
+    port: 5672
+    username: Wulis
+    password: Wulis
+
+  redis:
+    host: wulis.redis
+    password: Wulis
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 100           # 最大空闲数
+        min-idle: 1             # 资源池确保最少空闲的连接数 默认值0
+        max-wait: -1
+        max-active: 1000
+    timeout: 10000              # 客户端超时时间单位是毫秒 默认是2000
+
+  # security 安全认证
+  security:
+    user:
+      name: gateway
+      password: gateway
+      roles: admin
+
+# 暴露所有端口和接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+  endpoint:
+    health:          # 健康检查
+      show-details: ALWAYS

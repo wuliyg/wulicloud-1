@@ -1,0 +1,54 @@
+foo: Monitor-dev.v10
+server:
+  port: 9006
+
+spring:
+  cloud:
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+
+  rabbitmq:
+    host: wulis.rabbitmq
+    port: 5672
+    username: Wulis
+    password: Wulis
+
+  security:
+    user:
+      name: admin
+      password: admin
+
+  # 邮件发送的配置（以下请设置成自己邮箱地址）
+#  mail:
+#    host: smtp.qq.com
+#    username: 1435468902@qq.com
+#    password:                      # 授权码 需要手动开启qq邮箱smtp获取授权码
+#    default-encoding: UTF-8
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#            required: true
+#  boot:
+#    admin:
+#      notify:
+#        mail:
+#          from: 1435468902@qq.com
+#          to: 1435468902@qq.com
+
+# 暴露所有端口和接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

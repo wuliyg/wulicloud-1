@@ -1,0 +1,51 @@
+spring:
+  cloud:
+    bus:                 # 开启Bus热部署,通过RabbitMQ动态获取远程配置文件实现刷新
+      enabled: true
+      trace:
+        enabled: true
+
+  rabbitmq:              # RabbitMQ配置
+    host: wulis.rabbitmq
+    port: 5672
+    username: Wulis
+    password: Wulis
+
+management:              # 暴露所有端口和接口
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+  endpoint:
+    health:              # 健康检查
+      show-details: ALWAYS
+
+# 高可用config server 集群配置
+---     # 读取github上配置文件
+server:
+  port: 9004
+spring:
+  profiles: git
+  cloud:
+    config:
+      server:
+        git:
+          username:
+          password:
+          uri: https://github.com/ChengbaoWen/wulicloud/          # github 项目地址
+          search-paths: wulicloud-config/src/main/resources/config         # 配置文件地址
+      label: master                                               # 远程仓库的分支
+
+---    # 读取本地配置文件
+server:
+  port: 9003
+spring:
+  profiles: native                 #读取本地配置文件必须有此项，且必须为native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config            # 本地配置文件路径

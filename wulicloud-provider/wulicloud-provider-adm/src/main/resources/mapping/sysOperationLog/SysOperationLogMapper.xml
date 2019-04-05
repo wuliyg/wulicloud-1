@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wulis.provider.sysOperationLog.mapper.SysOperationLogMapper">
+    <resultMap id="BaseResultMap" type="com.wulis.provider.sysOperationLog.model.dto.SysOperationLogDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="input_time" jdbcType="VARCHAR" property="inputTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="operation_name" jdbcType="VARCHAR" property="operationName"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="operation_type" jdbcType="VARCHAR" property="operationType"/>
+        <result column="operation_result" jdbcType="VARCHAR" property="operationResult"/>
+        <result column="interface_add" jdbcType="VARCHAR" property="interfaceAdd"/>
+        <result column="ip_add" jdbcType="VARCHAR" property="ipAdd"/>
+        <result column="execution_start_time" jdbcType="VARCHAR" property="executionStartTime"/>
+        <result column="execution_end_time" jdbcType="VARCHAR" property="executionEndTime"/>
+        <result column="is_del" jdbcType="VARCHAR" property="isDel"/>
+        <result column="is_enable" jdbcType="VARCHAR" property="isEnable"/>
+        <result column="operator_by" jdbcType="VARCHAR" property="operatorBy"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.wulis.provider.sysOperationLog.model.dto.SysOperationLogDto">
+        <result column="request_param" jdbcType="LONGVARCHAR" property="requestParam"/>
+        <result column="return_param" jdbcType="LONGVARCHAR" property="returnParam"/>
+    </resultMap>
+</mapper>

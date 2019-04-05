@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: wulicloud-monitor
+  cloud:
+    config:
+      label: master
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: wulicloud-config
+
+#eureka必须配置在bootstrap中
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}     # eureka中实例显示配置
+    prefer-ip-address: true
+    #eureka客户端需要多长时间发送心跳给eureka服务器，表明他仍然或者，默认30秒
+    lease-renewal-interval-in-seconds: 30
+    #eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
+    lease-expiration-duration-in-seconds: 60
+    health-check-url-path: /actuator/health   # 健康检查的地址（依赖spring-boot-starter-actuator）
+    metadata-map:
+      user:
+        name: ${spring.security.user.name}
+        password: ${spring.security.user.password}
+  client:
+    registerWithEureka: true                   # 是否注册到Eureka服务中
+    fetchRegistry: true                        # 是否读取Eureka服务中的注册信息
+    registryFetchIntervalSeconds: 20           # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    serviceUrl:
+      defaultZone: http://eureka:eureka@eureka.server.a:9000/eureka,http://eureka:eureka@eureka.server.b:9001/eureka

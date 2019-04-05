@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.7.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.wulis</groupId>
+    <artifactId>wulicloud</artifactId>
+    <version>1.0</version>
+    <!-- 打包方式 -->
+    <packaging>pom</packaging>
+
+    <name>wulicloud</name>
+    <description>Asset project for wulicloud</description>
+    <modules>
+        <!-- eureka注册中心 -->
+        <module>wulicloud-eureka</module>
+        <!-- config配置中心 -->
+        <module>wulicloud-config</module>
+        <!-- gateway网关 -->
+        <module>wulicloud-gateway</module>
+        <!-- admin监控中心 -->
+        <module>wulicloud-monitor</module>
+        <!-- auth2.0授权中心 -->
+        <module>wulicloud-auth</module>
+        <!-- 公共服务组件 -->
+        <module>wulicloud-common</module>
+        <!-- 业务接口服务 -->
+        <module>wulicloud-provider</module>
+        <!-- 业务接口服务API -->
+        <module>wulicloud-provider-api</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+    </properties>
+
+    <dependencies>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

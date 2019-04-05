@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wulis.provider.dataDictionary.mapper.DictionaryItemMapper">
+    <resultMap id="BaseResultMap" type="com.wulis.provider.dataDictionary.model.dto.DictionaryItemDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="dic_id" jdbcType="INTEGER" property="dicId"/>
+        <result column="input_time" jdbcType="VARCHAR" property="inputTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="item_value" jdbcType="VARCHAR" property="itemValue"/>
+        <result column="text" jdbcType="VARCHAR" property="text"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="is_enable" jdbcType="VARCHAR" property="isEnable"/>
+        <result column="operator_by" jdbcType="VARCHAR" property="operatorBy"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, dic_id, input_time, update_time, item_name, item_value, text, sort, is_enable, operator_by
+    </sql>
+    <!-- 根据字典名称查询item -->
+    <select id="queryDicItemByDicName" parameterType="com.wulis.provider.dataDictionary.model.vo.DictionaryTypeVo"
+            resultMap="BaseResultMap">
+        SELECT  item.id,item.dic_id,item.input_time,item.update_time,
+                item.item_name,item.item_value,item.text,
+                item.sort,item.is_enable,item.operator_by
+        FROM admin_dictionary_type type LEFT JOIN admin_dictionary_item item
+        ON type.id=item.dic_id
+        WHERE type.dic_name = #{dicName}
+        ORDER BY sort asc
+    </select>
+</mapper>

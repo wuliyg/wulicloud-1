@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: wulicloud-gateway
+  cloud:
+    config:
+      label: master
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: wulicloud-config
+    # gateway网关配置
+    gateway:
+      filter:
+        remove-non-proxy-headers:
+          headers:
+            - dummy
+      routes:
+        - id: Afs-API                        # 财务报表中心路由
+          uri: lb://wulicloud-provider-afs  # /info必须使用http进行转发，lb代表从注册中心获取服务
+          predicates:                        # 转发该路径:/afs/**,
+            - Path=/afs/**
+          filters:                           # http://localhost:8080/afs/cal/query, 必须加上StripPrefix=1，否则访问服务时会带上afs,而不是我们期望的去掉afs，只保留**部分
+            - StripPrefix=1
+
+        - id: Adm-API                        # Admin管理中心路由
+          uri: lb://wulicloud-provider-adm
+          predicates:
+            - Path=/adm/**
+          filters:
+            - StripPrefix=1
+
+        - id: Member-API                     # 会员中心路由
+          uri: lb://wulicloud-provider-mem
+          predicates:
+            - Path=/mem/**
+          filters:
+            - StripPrefix=1
+
+
+#eureka必须配置在bootstrap中
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}     # eureka中实例显示配置
+    prefer-ip-address: true                    # eureka客户端需要多长时间发送心跳给eureka服务器，表明他仍然或者，默认30秒
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 60   # eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
+    health-check-url-path: /actuator/health    # 健康检查的地址（依赖spring-boot-starter-actuator）
+  client:
+    registerWithEureka: true                   # 是否注册到Eureka服务中
+    fetchRegistry: true                        # 是否读取Eureka服务中的注册信息
+    registryFetchIntervalSeconds: 20           # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    serviceUrl:
+      defaultZone: http://eureka:eureka@eureka.server.a:9000/eureka,http://eureka:eureka@eureka.server.b:9001/eureka
