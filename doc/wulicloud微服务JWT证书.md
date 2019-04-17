@@ -1,16 +1,18 @@
-生成证书(JDK路径下):
-keytool -genkeypair -alias auth-jwt -keypass WuliCloud -storepass WuliCloud -validity 3650 -keyalg RSA -keysize 1024 -keystore auth-jwt.jks
-导出证书(需要openssl.exe):
-keytool -list -rfc --keystore auth-jwt.jks | 路径:openssl.exe x509 -inform pem -pubkey
+## wulicloud微服务JWT证书
 
-全部证书内容:
------BEGIN PUBLIC KEY-----
+### 生成证书(JDK路径下):
+keytool -genkeypair -alias auth-jwt -keypass WuliCloud -storepass WuliCloud -validity 3650 -keyalg RSA -keysize 1024 -keystore auth-jwt.jks
+### 导出证书(需要openssl.exe): 
+keytool -list -rfc --keystore auth-jwt.jks | 路径:openssl.exe x509 -inform pem -pubkey
+### 全部证书内容:
+
+---BEGIN PUBLIC KEY---<br>
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCLo3ysVsHAevdo+W/zOIvLpT0W
 uSIIQ30Ac7jPhrRUQqoSsVmS49UJVfXVsgtuyDM1TKzDZRtRXwQ1x+SqP0NvZTl1
 40E0YrwX7/KANEYLD3L0/veeCIQ78GzuJwSKgIcUeXQHrGy31TcOILL11cnpK5xB
-3doQdkKM/S8EeTarZQIDAQAB
------END PUBLIC KEY-----
------BEGIN CERTIFICATE-----
+3doQdkKM/S8EeTarZQIDAQAB<br>
+---END PUBLIC KEY---<br>
+---BEGIN CERTIFICATE---<br>
 MIICRjCCAa+gAwIBAgIEW2IkyDANBgkqhkiG9w0BAQsFADBWMQswCQYDVQQGEwJD
 TjELMAkGA1UECBMCSFoxCzAJBgNVBAcTAkhaMQ4wDAYDVQQKEwVXdWxpczEOMAwG
 A1UECxMFV3VsaXMxDTALBgNVBAMTBFd1bGkwHhcNMTkwNDA1MTI0MjU5WhcNMjkw
@@ -23,5 +25,5 @@ nEHd2hB2Qoz9LwR5NqtlAgMBAAGjITAfMB0GA1UdDgQWBBSc2DN/8PiIfk1BN9nH
 E/YkiDnYlDANBgkqhkiG9w0BAQsFAAOBgQCHtcqyokTGQlF6hkTEvXKQl6V6XI9h
 INc0viYjTN8rb4w3C9S3ZZUaLyeCudRKY0Y3rSJlCkw9d0ixB3QfMgCy33U/eMN9
 X69opGlSk/a9NGYDfogT6+9SVOdpsgycZ9x2b11HJ9IWMdXfZhq8tgyNKTHI+aVE
-2BSlgbMFzs3wmw==
------END CERTIFICATE-----
+2BSlgbMFzs3wmw==<br>
+---END CERTIFICATE---<br>
