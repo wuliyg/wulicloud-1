@@ -1,9 +1,11 @@
-生成证书(JDK路径下):
+微服务JWT证书
+=================
+* **生成证书(JDK路径下)**:
 keytool -genkeypair -alias auth-jwt -keypass WuliCloud -storepass WuliCloud -validity 3650 -keyalg RSA -keysize 1024 -keystore auth-jwt.jks
-导出证书(需要openssl.exe):
+* **导出证书(需要openssl.exe)**:
 keytool -list -rfc --keystore auth-jwt.jks | 路径:openssl.exe x509 -inform pem -pubkey
 
-全部证书内容:
+* **全部证书内容**:
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCLo3ysVsHAevdo+W/zOIvLpT0W
 uSIIQ30Ac7jPhrRUQqoSsVmS49UJVfXVsgtuyDM1TKzDZRtRXwQ1x+SqP0NvZTl1
@@ -25,3 +27,4 @@ INc0viYjTN8rb4w3C9S3ZZUaLyeCudRKY0Y3rSJlCkw9d0ixB3QfMgCy33U/eMN9
 X69opGlSk/a9NGYDfogT6+9SVOdpsgycZ9x2b11HJ9IWMdXfZhq8tgyNKTHI+aVE
 2BSlgbMFzs3wmw==
 -----END CERTIFICATE-----
+
